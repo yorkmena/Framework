@@ -24,33 +24,23 @@ import utility.CaptureScreenshots;
 
 public class LoginTest extends TestBase{
 	
-	@BeforeTest
-	public void setup()
-	{
-		report=new ExtentReports(".\\Reports\\HomePageReport.html",true);
-	    logger=report.startTest("Login Test Logs");
-		driver=BrowserFactory.getBrowser(Config.getvalue("Browser"));
-		logger.log(LogStatus.INFO, "Browser Started");
-		driver.get(Config.getUrl());
-	    logger.log(LogStatus.INFO, "Webpage Open");
-	}
 	
-	@Test(testName="login")
+	@Test(testName="Verify Title")
 	public void VerifyTitle() throws Exception
 	{
-		IndexPage Index1=PageFactory.initElements(driver, IndexPage.class);	
+		IndexPage Index1=PageFactory.initElements(d, IndexPage.class);	
 		Index1.clickOnMobile();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		Assert.assertEquals(driver.getTitle(),"Mobile");
+		d.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		Assert.assertEquals(d.getTitle(),"Mobile");
 		logger.log(LogStatus.PASS, "Title Verified");
-		
 	}
 	@Test(priority=1)
-	public void VefifySorting()
+	public void VefifySorting(ITestResult result)
 	{
-		MobilePage Mobile =PageFactory.initElements(driver, MobilePage.class);
+		MobilePage Mobile =PageFactory.initElements(d, MobilePage.class);
 		Mobile.SortBy("name");
-		List<WebElement> order=driver.findElements(By.cssSelector(".product-image>img"));
+		
+		List<WebElement> order=d.findElements(By.cssSelector(".product-image>img"));
 		List<String>OrderName=new LinkedList<String>();
 		for(WebElement ele : order)
 		{
@@ -71,23 +61,9 @@ public class LoginTest extends TestBase{
 		pre=str;
 		}
 		Assert.assertTrue(b);
-		String path=CaptureScreenshots.captureScreenshoot(driver,"Sorting test" );
+		String name=result.getTestName();
+		String path=CaptureScreenshots.captureScreenshoot(d,"Sorting test" );
 		logger.log(LogStatus.PASS, "Sortby Name Verified",logger.addScreenCapture(path));
 	}
-	@AfterMethod
-	public void teardownMethod(ITestResult result)
-	{
-		if(result.getStatus()==ITestResult.FAILURE)
-		{
-			String path= CaptureScreenshots.captureScreenshoot(driver, result.getName());
-			logger.log(LogStatus.FAIL,result.getName(), logger.addScreenCapture(path));
-			
-		}
-	}
-	@AfterTest
-	public void teardownTest()
-	{
-		report.endTest(logger);report.flush();
-		driver.quit();
-	} 
+	
 }

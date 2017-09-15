@@ -11,19 +11,21 @@ public class ExcelDataProvider {
 	XSSFWorkbook wb;
 	XSSFSheet sheet;
 	
-	configDataProvider dataProvider;
+	configDataProvider dataProvider=new configDataProvider();
 	public ExcelDataProvider()	
 	{
-	   File f=new File(System.getProperty("user.dir")+dataProvider.getvalue("ExcelFilePath"));
+		File f=new File(System.getProperty("user.dir")+dataProvider.getvalue("ExcelFilePath"));
+		//System.out.println(dataProvider.getvalue("ExcelFilePath"));
+	   //File f=new File(dataProvider.getvalue("ExcelFilePath"));
+	   
 	   FileInputStream fis;
-	try {
-		fis = new FileInputStream(f);
-		 wb=new XSSFWorkbook(fis);
-		} 
-	catch (Exception e) 
-	{
-		System.out.println(e.getMessage());
-	}
+	   try{
+		       fis = new FileInputStream(f);
+		   	   wb=new XSSFWorkbook(fis);
+		  } 
+	   catch (Exception e){
+		   		System.out.println(e.getMessage());
+		   		}
 	   
 	}
 	

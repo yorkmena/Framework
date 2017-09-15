@@ -2,18 +2,23 @@ package dataProvider;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Properties;
 
 public class configDataProvider {
 	
 	Properties p;
+	File f;
 	public configDataProvider()
 	{	
 		
-		File f =new File("C:/Users/pc/workspace1/com.primologic.mercury/Configutation/config.properties");
+		f =new File("./Configutation/config.properties");
 		
 		try {
 			FileInputStream fis = new FileInputStream(f);
+			
 			p=new Properties();
 			p.load(fis);
 			
@@ -32,7 +37,12 @@ public class configDataProvider {
 	public String getUrl()
 	{
 		return p.getProperty("url");	
-	}	
+	}
+	
+	public String getUrl1()
+	{
+		return p.getProperty("url1");	
+	}
 	
 	public String getchromePath()
 	{
@@ -41,6 +51,13 @@ public class configDataProvider {
 	public String getIEPath()
 	{
 		return System.getProperty("User.dir")+p.getProperty("IEPath");
+	}
+	
+	public void setPro(String key, String value) throws FileNotFoundException, IOException
+	{
+		p.setProperty(key, value);
+		p.store(new FileOutputStream(f), "New property saved");
+		
 	}
 	
 }

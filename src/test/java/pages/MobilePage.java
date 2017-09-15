@@ -1,5 +1,8 @@
 package pages;
 
+import java.util.List;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
@@ -8,6 +11,10 @@ public class MobilePage {
 	
 	@FindBy(css="select[title='Sort By']")
 	WebElement Dropdown;
+	
+	@FindBy(css=".product-image>img")
+	List<WebElement> order;
+	
 	
 	public void SortBy(String value)
 	{
@@ -25,9 +32,6 @@ public class MobilePage {
 		{
 		select.selectByVisibleText("Price");
 		}
-		
-		
-		
 		
 	}
 	
